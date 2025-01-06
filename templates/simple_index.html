@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Score Prediction in Subjects</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            color: #2C3E50;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        form {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        label {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: #34495E;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #BDC3C7;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            color: #2C3E50;
+        }
+        input[type="number"]:focus {
+            border-color: #3498DB;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #3498DB;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #2980B9;
+        }
+        h2 {
+            color: #2C3E50;
+            font-size: 1.5rem;
+            margin-top: 20px;
+            text-align: center;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            color: #34495E;
+            font-size: 1.1rem;
+        }
+        li {
+            margin: 8px 0;
+        }
+        .error {
+            color: #E74C3C;
+            font-size: 1.1rem;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Score Prediction in Subjects</h1>
+        <form method="POST">
+            {% for feature in ['Q1', 'Q2', 'A1', 'Q3', 'Q4', 'Midterm'] %}
+                <label for="{{ feature }}">{{ feature }}:</label>
+                <input type="number" step="0.01" name="{{ feature }}" required><br>
+            {% endfor %}
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if prediction %}
+            <h2>Prediction Results:</h2>
+            <ul>
+                {% for key, value in prediction.items() %}
+                    <li>{{ key }}: {{ value }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if error %}
+            <h3 class="error">Error: {{ error }}</h3>
+        {% endif %}
+    </div>
+</body>
+</html>
